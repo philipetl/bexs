@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const Route = require('./Route')
 
 class RouterReader {
     static #routes = []
@@ -12,7 +13,8 @@ class RouterReader {
             .toString()
             .split('\n')
             .map(l => l.trim())
-            .map(l => l.split(',').map(c => c.trim()));
+            .map(l => l.split(',').map(c => c.trim()))
+            .map(l => new Route(l[0], l[1], l[2]));
 
         return this.#routes;
     }
