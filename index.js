@@ -1,6 +1,8 @@
-const app = require('./src/config/custom-express');
+const app = require('./src/config/customExpress');
 const readline = require('readline');
 const { exit } = require('process');
+
+const RouterReader = require('./src/app/RouteReader')
 
 var rl = readline.createInterface({
     input: process.stdin,
@@ -14,7 +16,9 @@ waitForUserInput = () => {
             rl.close();
             exit();
         } else {
-            console.log(queryRoute);
+            console.log(RouterReader.readCsvToRoutes());
+
+            
             waitForUserInput();
         }
     });
