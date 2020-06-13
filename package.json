@@ -4,6 +4,8 @@
   "description": "Case for the interview process for Bext Bank.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "jest"
   },
   "repository": {
@@ -24,5 +26,8 @@
   "devDependencies": {
     "jest": "^26.0.1",
     "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
