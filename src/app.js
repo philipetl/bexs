@@ -1,8 +1,8 @@
-const app = require('./src/config/customExpress');
+const app = require('./config/customExpress');
 const readline = require('readline');
 const { exit } = require('process');
 
-const RouterReader = require('./src/reader/RouteReader')
+const RouterReader = require('./reader/RouteReader')
 
 var rl = readline.createInterface({
     input: process.stdin,

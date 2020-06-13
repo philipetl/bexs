@@ -1,12 +1,12 @@
 const fs = require('fs')
 const path = require('path')
-const Route = require('./Route')
+const Route = require('../domain/Route')
 
 class RouterReader {
     static #routes = []
     static #filePath
 
-    static readCsvToRoutes = (fileName = './src/resource/input-file11111111111.txt') => {
+    static readCsvToRoutes = (fileName = './src/resource/input-file.txt') => {
         this.#filePath = path.resolve(fileName)
 
         this.#routes = fs.readFileSync(this.#filePath)

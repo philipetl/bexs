@@ -1,4 +1,4 @@
-const Route = require("../../app/Route");
+const Route = require("../../src/domain/Route");
 
 exports.ROUTES = [
     new Route('GRU', 'BRC', "10"),
