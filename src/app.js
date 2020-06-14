@@ -4,6 +4,9 @@ const { exit } = require('process');
 
 const Manager = require('./Manager/Manager')
 
+var param = process.argv[2]
+console.log(param)
+
 var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -17,9 +20,8 @@ waitForUserInput = () => {
             exit();
         } else {
             let result;
-
             try {
-                result = new Manager().findCheapestRouteBy(queryRoute);
+                result = new Manager(param).findCheapestRouteBy(queryRoute);
             } catch (e) {
                 result = e.message;
             }
