@@ -2,7 +2,7 @@ const app = require('./config/customExpress');
 const readline = require('readline');
 const { exit } = require('process');
 
-const RouterReader = require('./reader/RouteReader')
+const Manager = require('./Manager/Manager')
 
 var rl = readline.createInterface({
     input: process.stdin,
@@ -16,7 +16,7 @@ waitForUserInput = () => {
             rl.close();
             exit();
         } else {
-            console.log(RouterReader.readCsvToRoutes());
+            console.log(new Manager().findCheapestRouteBy(queryRoute));
             waitForUserInput();
         }
     });
