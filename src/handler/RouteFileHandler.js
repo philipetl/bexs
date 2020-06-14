@@ -3,8 +3,8 @@ const path = require('path')
 const Route = require('../domain/Route')
 
 class RouterReader {
-    static #routes = []
-    static #filePath
+    static #routes = [];
+    static #filePath;
 
     static readCsvToRoutes = (fileName = './src/resource/input-file.txt') => {
         this.#filePath = path.resolve(fileName)
@@ -22,4 +22,4 @@ class RouterReader {
     static write = (route) => fs.appendFileSync(this.#filePath, '\n' + route);
 }
 
-module.exports = RouterReader
+module.exports = RouterReader;

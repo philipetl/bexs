@@ -16,7 +16,14 @@ waitForUserInput = () => {
             rl.close();
             exit();
         } else {
-            console.log(new Manager().findCheapestRouteBy(queryRoute));
+            let result;
+
+            try {
+                result = new Manager().findCheapestRouteBy(queryRoute);
+            } catch (e) {
+                result = e.message;
+            }
+            console.log(result);
             waitForUserInput();
         }
     });

@@ -1,15 +1,19 @@
-const RouteReader = require('../reader/RouteReader');
+const RouteReader = require('../handler/RouteFileHandler');
 const Validator = require('../util/Validator');
 const Route = require('../domain/Route');
+const Searcher = require('../service/Searcher')
 
 class Manager {
     constructor(filePath) {
         this.allRoutes = RouteReader.readCsvToRoutes(filePath);
+        this.searcher = new Searcher(this.allRoutes);
     }
 
     findCheapestRouteBy = (queryRoute) => {
         if (!Validator.isSearchValid(queryRoute)) throw new Error('invalid search');
-        return this.allRoutes;
+        let [origin, destination] = queryRoute.split('-');
+
+        return this.searcher.searchCheapestRouteFormatted(origin, destination);
     }
 
     addRoute = (routeStr) => {
