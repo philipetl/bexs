@@ -29,31 +29,16 @@ waitForUserInput = () => {
 }
 
 exports.init = () => {
-
-    let param = 'C:\\Users\\cin_plima\\Downloads\\arquivo-teste-fail.csv';
-    param = getVerifyRouteFile(param);
-
-    console.log('source file: ' + param);
-    Manager.getInstance().load(param);
-
-    let queryRoute = 'GRU-CDG';
     try {
-        result = Manager.getInstance().findCheapestRouteBy(queryRoute);
+        let param = process.argv[2]
+        param = getVerifyRouteFile(param);
+
+        console.log('source file: ' + param);
+        Manager.getInstance().load(param);
+
+        waitForUserInput(); 
     } catch (e) {
-        result = e.message;
+        console.log(e.message);
+        exit();
     }
-
-
-    // try {
-    //     let param = process.argv[2]
-    //     param = getVerifyRouteFile(param);
-
-    //     console.log('source file: ' + param);
-    //     Manager.getInstance().load(param);
-
-    //     waitForUserInput();
-    // } catch (e) {
-    //     console.log(e.message);
-    //     exit();
-    // }
 };
