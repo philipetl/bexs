@@ -1,7 +1,7 @@
 const app = require('./config/CustomExpress');
 const readline = require('readline');
 const { exit } = require('process');
-const verifyRouteFile = require('./helper/RouteFile').verifyRouteFile
+const getVerifyRouteFile = require('./helper/RouteFile').getVerifyRouteFile
 const Manager = require('./manager/Manager');
 
 var rl = readline.createInterface({
@@ -29,16 +29,31 @@ waitForUserInput = () => {
 }
 
 exports.init = () => {
+
+    let param = 'C:\\Users\\cin_plima\\Downloads\\arquivo-teste-fail.csv';
+    param = getVerifyRouteFile(param);
+
+    console.log('source file: ' + param);
+    Manager.getInstance().load(param);
+
+    let queryRoute = 'GRU-CDG';
     try {
-        let param = process.argv[2]
-        param = verifyRouteFile(param);
-
-        console.log('source file: ' + param);
-        Manager.getInstance().load(param);
-
-        waitForUserInput();
+        result = Manager.getInstance().findCheapestRouteBy(queryRoute);
     } catch (e) {
-        console.log(e.message);
-        exit();
+        result = e.message;
     }
+
+
+    // try {
+    //     let param = process.argv[2]
+    //     param = getVerifyRouteFile(param);
+
+    //     console.log('source file: ' + param);
+    //     Manager.getInstance().load(param);
+
+    //     waitForUserInput();
+    // } catch (e) {
+    //     console.log(e.message);
+    //     exit();
+    // }
 };

@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const Route = require('../domain/Route');
 const { FILE } = require('dns');
+const Validator = require('./Validator');
 
 const FILE_PATH_TO_RESOURCE = './src/resource/input-file.csv';
 
@@ -11,7 +12,7 @@ class RouteFileHandler {
     static #fileLastUpdate;
 
     static readCsvToRoutes = (filePath = FILE_PATH_TO_RESOURCE) => {
-        this.#filePath = path.resolve(filePath);
+        this.#filePath = this.getVerifyRouteFile(filePath);
 
         if (this.hasFileBeenUpdated()) {
             this.#routes = fs.readFileSync(this.#filePath)
@@ -22,6 +23,31 @@ class RouteFileHandler {
                 .map(l => new Route(l[0], l[1], l[2]));
         }
         return this.#routes;
+    }
+
+    static getVerifyRouteFile = (filePath) => {
+        if (!filePath) {
+            filePath = FILE_PATH_TO_RESOURCE;
+        }
+
+        filePath = path.resolve(filePath);
+
+        if (!fs.existsSync(filePath)) {
+            throw new Error('file not found or file without read permission');
+        }
+
+        fs.readFileSync(filePath)
+            .toString()
+            .split('\n')
+            .map(l => l.trim())
+            .map(l => l.split(',').map(c => c.trim()))
+            .forEach(l => {
+                if (!Validator.isRouteValid(l)) {
+                    throw new Error('file contains invalid route(s)');
+                }
+            });
+
+        return filePath;
     }
 
     static write = (route) => {
@@ -36,20 +62,6 @@ class RouteFileHandler {
             return true;
         }
         return false;
-    }
-
-    static verifyRouteFile = (filePath) => {
-        if (!filePath) {
-            filePath = FILE_PATH_TO_RESOURCE;
-        }
-
-        filePath = path.resolve(filePath);
-
-        fs.access(filePath, fs.F_OK, (err) => {
-            if (err) throw new Error('file not found or file without read permission');
-        })
-
-        return filePath;
     }
 }
 
