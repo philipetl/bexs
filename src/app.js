@@ -1,11 +1,8 @@
-const app = require('./config/customExpress');
+const app = require('./config/CustomExpress');
 const readline = require('readline');
 const { exit } = require('process');
-
-const Manager = require('./Manager/Manager')
-
-var param = process.argv[2]
-console.log(param)
+const verifyRouteFile = require('./helper/RouteFile').verifyRouteFile
+const Manager = require('./manager/Manager');
 
 var rl = readline.createInterface({
     input: process.stdin,
@@ -21,7 +18,7 @@ waitForUserInput = () => {
         } else {
             let result;
             try {
-                result = new Manager(param).findCheapestRouteBy(queryRoute);
+                result = Manager.getInstance().findCheapestRouteBy(queryRoute);
             } catch (e) {
                 result = e.message;
             }
@@ -31,4 +28,17 @@ waitForUserInput = () => {
     });
 }
 
-waitForUserInput();
+exports.init = () => {
+    try {
+        let param = process.argv[2]
+        param = verifyRouteFile(param);
+
+        console.log('source file: ' + param);
+        Manager.getInstance().load(param);
+
+        waitForUserInput();
+    } catch (e) {
+        console.log(e.message);
+        exit();
+    }
+};

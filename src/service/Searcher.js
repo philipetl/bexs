@@ -1,15 +1,17 @@
+let possibleRoutes;
+
 class Searcher {
     constructor(allRoutes) {
         this.allRoutes = allRoutes;
-        this.possibleRoutes = [];
     }
 
     searchCheapestRouteFormatted = (origin, destination) => {
+        possibleRoutes = [];
         this._calcPossibleRoutes(origin, destination);
 
-        if (this.possibleRoutes.length == 0) throw new Error('no routes');
+        if (possibleRoutes.length == 0) throw new Error('no routes');
 
-        let [bestRoute, bestRouteCost] = this._getCheapestRoute(this.possibleRoutes);
+        let [bestRoute, bestRouteCost] = this._getCheapestRoute(possibleRoutes);
         return this._formatString(bestRoute, bestRouteCost);
     }
 
@@ -19,7 +21,7 @@ class Searcher {
                 previousRoutes.push(route);
 
                 if (route.destination == destination) {
-                    this.possibleRoutes.push(previousRoutes);
+                    possibleRoutes.push(previousRoutes);
                     previousRoutes = [];
                     return;
                 } else {

@@ -1,19 +1,43 @@
-const RouteReader = require('../handler/RouteFileHandler');
-const Validator = require('../util/Validator');
+const RouteFileHelper = require('../helper/RouteFile');
+const Validator = require('../helper/Validator');
 const Route = require('../domain/Route');
-const Searcher = require('../service/Searcher')
+const Searcher = require('../service/Searcher');
 
 class Manager {
-    constructor(filePath) {
-        this.allRoutes = RouteReader.readCsvToRoutes(filePath);
-        this.searcher = new Searcher(this.allRoutes);
+    static #instance;
+    allRoutes = [];
+    searcher;
+
+    static getInstance = () => {
+        if (!Manager.instance) {
+            Manager.instance = new Manager();
+        }
+        return Manager.instance;
+    }
+
+    load = (param) => {
+        if (typeof param === 'string') {
+            this.allRoutes = RouteFileHelper.readCsvToRoutes(param);
+        } else if (Array.isArray(param)) {
+            this.allRoutes = this.allRoutes.concat(param);
+        } else if (param instanceof Route) {
+            this.allRoutes.push(param);
+        }
+        return this;
+    }
+
+    getSearcher = () => {
+        if (!this.searcher) {
+            this.searcher = new Searcher(this.allRoutes);
+        }
+        return this.searcher;
     }
 
     findCheapestRouteBy = (queryRoute) => {
         if (!Validator.isSearchValid(queryRoute)) throw new Error('invalid search');
         let [origin, destination] = queryRoute.split('-');
 
-        return this.searcher.searchCheapestRouteFormatted(origin, destination);
+        return this.getSearcher().searchCheapestRouteFormatted(origin, destination, this.allRoutes);
     }
 
     addRoute = (routeStr) => {
@@ -24,7 +48,9 @@ class Manager {
         if (this.allRoutes.some(r => JSON.stringify(r) == JSON.stringify(route))) {
             throw new Error('route already exists');
         }
-        RouteReader.write(routeStr);
+        RouteFileHelper.write(routeStr);
+
+        this.load(route);
 
         return 'route added';
     }

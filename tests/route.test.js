@@ -1,14 +1,14 @@
-const RouteFileHandler = require('../src/handler/RouteFileHandler');
+const RouteFileHandler = require('../src/helper/RouteFile');
 const routeMock = require('./mocks/routeMock');
 const fs = require('fs');
 const Manager = require('../src/manager/Manager');
-const Validator = require('../src/util/Validator');
+const Validator = require('../src/helper/Validator');
 const Searcher = require('../src/service/Searcher')
 
 const INPUT_FILE = './tests/resource/test-input.csv';
 const INPUT_FILE_COPY = './tests/resource/test-input-copy.csv';
 
-describe('RouteReader', () => {
+describe('helper/RouteFile', () => {
     test('reader must return array of arrays after read from file', () => {
         let expectedRoutes = routeMock.ROUTES;
 
@@ -31,6 +31,7 @@ describe('Manager', () => {
     let spyRouteFileHandlerWrite;
     let spyIsRouteValid;
     let spyIsSearchValid;
+    let spySearchCheapestRouteFormatted;
 
     beforeEach(() => {
         fs.copyFileSync(INPUT_FILE, INPUT_FILE_COPY);
@@ -40,9 +41,9 @@ describe('Manager', () => {
     });
 
     afterEach(() => {
-        spyRouteFileHandlerWrite.mockClear()
-        spyIsRouteValid.mockClear()
-        spyIsSearchValid.mockClear()
+        spyRouteFileHandlerWrite.mockClear();
+        spyIsRouteValid.mockClear();
+        spyIsSearchValid.mockClear();
 
         fs.unlink(INPUT_FILE_COPY, (err) => {
             if (err) throw err;
@@ -50,16 +51,24 @@ describe('Manager', () => {
     });
 
     test('manager must add route when the pattern is correct', () => {
-        const ROUTE = 'UUU,VVV,666';
-        expect(new Manager(INPUT_FILE_COPY).addRoute(ROUTE)).toBe('route added');
+        const ROUTE = 'UUU,VVV,420';
+        const QUERY_ROUTE = 'UUU-VVV';
+
+        expect(Manager.getInstance().load(INPUT_FILE_COPY).addRoute(ROUTE)).toBe('route added');
+        expect(spyIsRouteValid).toHaveBeenCalledTimes(1);
         expect(spyRouteFileHandlerWrite).toHaveBeenCalledTimes(1);
         expect(spyRouteFileHandlerWrite).toHaveBeenCalledWith(ROUTE);
-        expect(spyIsRouteValid).toHaveBeenCalledTimes(1);
+
+        const expectedCheapestRoute = 'best route: UUU - VVV > $420'
+        const receivedCheapestRoute = Manager.getInstance().findCheapestRouteBy(QUERY_ROUTE);
+
+        expect(spyIsSearchValid).toHaveBeenCalledTimes(1);
+        expect(receivedCheapestRoute).toBe(expectedCheapestRoute);
     });
 
     test('manager must throw error when route to be added is not in the right pattern', () => {
         try {
-            new Manager().addRoute('CRAZY QUERY ROUTE');
+            Manager.getInstance().addRoute('CRAZY QUERY ROUTE');
         } catch (e) {
             expect(e.message).toBe("invalid route");
         }
@@ -68,7 +77,7 @@ describe('Manager', () => {
 
     test('manager must throw error when queryRoute is not in the right pattern', () => {
         try {
-            new Manager().findCheapestRouteBy('CRAZY QUERY ROUTE');
+            new Manager().findCheapestRouteBy('CRAZY SEARCH ROUTE');
         } catch (e) {
             expect(e.message).toBe("invalid search");
         }
@@ -78,10 +87,10 @@ describe('Manager', () => {
     test('manager must find the best route given an valid route', () => {
         const QUERY_ROUTE = 'GRU-CDG';
         const expectedCheapestRoute = 'best route: GRU - BRC - SCL - ORL - CDG > $40'
-        
-        let receivedCheapestRoute = new Manager(INPUT_FILE).findCheapestRouteBy(QUERY_ROUTE);
+
+        let receivedCheapestRoute = Manager.getInstance().load(INPUT_FILE).findCheapestRouteBy(QUERY_ROUTE);
 
         expect(spyIsSearchValid).toHaveBeenCalledTimes(1);
         expect(receivedCheapestRoute).toBe(expectedCheapestRoute);
-    });    
+    });
 });
