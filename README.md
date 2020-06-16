@@ -5,11 +5,41 @@ Dentro da raiz do projeto, execute a instalação das dependências do node:
 ```sh
 $ npm install
 ```
-Então, ainda na raiz ou utilizando navegação de diretórios por referência, execute o comando:
+Então, ainda na raiz ou utilizando navegação de diretórios por referência, execute o comando: `$ npm start <ARQUIVO>`
 ```sh
-$ node start <ARQUIVO>
+$ npm start
+
+> bexs@1.0.0 start C:\Users\cin_plima\workspace\bexs
+> node index.js
+
+source file: C:\Users\cin_plima\workspace\bexs\src\resource\input-file.csv
+please enter the route: 
 ```
+Exemplo:
+```
+$ npm start ~/Downloads/arquivo-teste.csv
+
+> bexs@1.0.0 start C:\Users\cin_plima\workspace\bexs
+> node index.js "C:/Users/cin_plima/Downloads/arquivo-teste.csv"
+
+source file: C:\Users\cin_plima\Downloads\arquivo-teste.csv
+please enter the route:  
+```
+
 O ARQUIVO é opcional. Caso não passe o caminho no parâmetro, a aplicação assumirá `./src/resouce/input-file.csv` e utilizará o arquivo fornecido na descrição do problema.
+
+Ao iniciar, a aplicação exibirá o arquivo que está sendo utilizado e habilitará tanto possibilidade de chamadas via REST quanto input via linha de comando.
+```sh
+source file: C:\Users\cin_plima\workspace\bexs\src\resource\input-file.csv
+please enter the route: ORL-SCL
+no routes
+please enter the route: SCL-ORL
+best route: SCL - ORL > $20
+please enter the route: bla-bla
+invalid search
+please enter the route:
+```
+
 
 ## Estrutura dos arquivos
 ```
