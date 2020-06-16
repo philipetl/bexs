@@ -11,7 +11,9 @@ module.exports = (app) => {
             result = e.message;
             if (result == 'invalid search') {
                 res.status(400);
-            } else {
+            } else if (result == 'no routes') {
+                res.status(404);
+            } else{
                 res.status(500);
             }
         }

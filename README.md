@@ -49,6 +49,7 @@ please enter the route:
 |	package-lock.json
 |	package.json
 |	tree.txt
+|___documentation/*
 |___src
 |	|	app.js
 |	|___config
@@ -84,11 +85,12 @@ Confesso que apesar de não tão familiarizado com o Node, utilizei como forma d
 Responses:
 [HTTP/1.1 200 OK]                       best route: GRU - BRC - SCL - ORL - CDG > $40
 [HTTP/1.1 400 BAD REQUEST]              invalid search
+[HTTP/1.1 404 NOT FOUND]                no routes
 [HTTP/1.1 500 INTERNAL SERVER ERROR]    others
 
 [POST] localhost:3000/route
 body: { "route": "GGG,PPP,679" }
 [HTTP/1.1 201 OK]                       route added
-[HTTP/1.1 400 BAD REQUEST]              route already exists
+[HTTP/1.1 409 CONFLICT]		            route already exists
 [HTTP/1.1 500 INTERNAL SERVER ERROR]    others
 ```

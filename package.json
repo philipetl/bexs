@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "jest"
+    "test": "jest",
+    "doc": "npx jsdoc -d documentation -r -R ./README.md ./src"
   },
   "repository": {
     "type": "git",
