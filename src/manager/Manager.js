@@ -26,7 +26,7 @@ class Manager {
         return this;
     }
 
-    getSearcher = () => {
+    _getSearcher = () => {
         if (!this.searcher) {
             this.searcher = new Searcher(this.allRoutes);
         }
@@ -37,7 +37,7 @@ class Manager {
         if (!Validator.isSearchValid(queryRoute)) throw new Error('invalid search');
         let [origin, destination] = queryRoute.split('-');
 
-        return this.getSearcher().searchCheapestRouteFormatted(origin, destination, this.allRoutes);
+        return this._getSearcher().searchCheapestRouteFormatted(origin, destination, this.allRoutes);
     }
 
     addRoute = (routeStr) => {
