@@ -38,7 +38,6 @@ describe('Manager', () => {
     let spyRouteFileHandlerWrite;
     let spyIsRouteValid;
     let spyIsSearchValid;
-    let spySearchCheapestRouteFormatted;
 
     beforeEach(() => {
         fs.copyFileSync(VALID_INPUT, VALID_INPUT_COPY);

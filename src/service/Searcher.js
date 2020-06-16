@@ -25,8 +25,8 @@ class Searcher {
                     previousRoutes = [];
                     return;
                 } else {
-                    let newOrigin = route.destination
-                    this._calcPossibleRoutes(newOrigin, destination, previousRoutes)
+                    let newOrigin = route.destination;
+                    this._calcPossibleRoutes(newOrigin, destination, previousRoutes);
                     previousRoutes = [];
                     return;
                 }
