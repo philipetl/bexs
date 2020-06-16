@@ -94,3 +94,6 @@ body: { "route": "GGG,PPP,679" }
 [HTTP/1.1 409 CONFLICT]		            route already exists
 [HTTP/1.1 500 INTERNAL SERVER ERROR]    others
 ```
+
+## Documentação
+A documentação está disponível em `./documentation/index.html` na raíz do projeto.
