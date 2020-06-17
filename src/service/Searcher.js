@@ -1,94 +1,71 @@
-let possibleRoutes;
+const PossibleRoute = require('../domain/PossibleRoute');
+const Route = require('../domain/Route');
+const util = require('util');
 
 /**
  * Responsável por realizar a busca de rotas
  */
 class Searcher {
-    /**
-     * @constructor
-     * @param {Route[]} allRoutes - array de rotas
-     */
-    constructor(allRoutes) {
-        this.allRoutes = allRoutes;
-    }
 
-    /** 
-     * Realiza a busca baseada na origem e destion
-     * @param {origin} - origem a ser buscada
-     * @param {destination} - destino a ser alcançado
-     * @returns {string} string formatada com a rota mais barata
-    */
-    searchCheapestRouteFormatted(origin, destination) {
-        possibleRoutes = [];
-        this._calcPossibleRoutes(origin, destination);
+    static instance;
+    paths = {};
+    allRoutes;
 
-        if (possibleRoutes.length == 0) throw new Error('no routes');
-
-        let [bestRoute, bestRouteCost] = this._getCheapestRoute(possibleRoutes);
-        return this._formatString(bestRoute, bestRouteCost);
-    }
-
-    /**
-     * Responsável por calcular as possíveis rotas para uma dada origem e destino
-     * 
-     * @param {string} origin - origem a ser buscada
-     * @param {string} destination - destino a ser alcançado
-     * @param {Route[]} previousRoutes - rotas anteriores
-     */
-    _calcPossibleRoutes(origin, destination, previousRoutes = []) {
-        this.allRoutes.forEach(route => {
-            if (route.origin == origin) {
-                previousRoutes.push(route);
-
-                if (route.destination == destination) {
-                    possibleRoutes.push(previousRoutes);
-                    previousRoutes = [];
-                    return;
-                } else {
-                    let newOrigin = route.destination;
-                    this._calcPossibleRoutes(newOrigin, destination, previousRoutes);
-                    previousRoutes = [];
-                    return;
-                }
-            }
-        });
-    }
-
-    /**
-     * Responsável por encontrar a rota mais barata entre as possíveis rotas
-     * @param {Route[]} routes - recebe o possibleRoutes
-     * @returns {Array} array com a rota mais barata e seu respectivo custo
-     */
-    _getCheapestRoute(routes) {
-        let bestRoute = routes[0];
-        let bestRouteCost = bestRoute.map(inner => parseInt(inner.cost)).reduce((a, b) => a + b, 0);
-        let actualRouteCost;
-
-        routes.slice(1).forEach(route => {
-            actualRouteCost = route.map(inner => parseInt(inner.cost)).reduce((a, b) => a + b, 0);
-
-            if (actualRouteCost < bestRouteCost) {
-                bestRoute = route;
-                bestRouteCost = actualRouteCost;
-            }
-        })
-        return [bestRoute, bestRouteCost];
-    }
-
-    /**
-     * Formata o conjunto de rotas da forma como é solicitado
-     * @param {string} routes - array com o melhor conjunto de rotas
-     * @param {int} cost - custo desse conjunto
-     */
-    _formatString(routes, cost) {
-        let i = 0;
-        let routeStr = '';
-
-        for (i; i < routes.length; i++) {
-            routeStr += routes[i].origin + ' - ';
+    static getInstance = () => {
+        if (!Searcher.instance) {
+            Searcher.instance = new Searcher();
         }
+        return Searcher.instance;
+    }
 
-        return 'best route: ' + routeStr + routes[i - 1].destination + ' > $' + cost;
+    build(allRoutesArray = []) {
+        this.allRoutes = allRoutesArray
+            .map(i => new Route(i[0], 0, allRoutesArray.filter(j => j[0] == i[0])
+                .map(j => new Route(j[1], j[2], []))))
+            .reduce((result, item) => {
+                result[item.origin] = item;
+                return result;
+            }, {});
+        allRoutesArray.filter(i => this.allRoutes[i[1]] === undefined)
+            .forEach(i => this.allRoutes[i[1]] = new Route(i[1], 0, []));
+
+        this.paths = {};
+        return this;
+    }
+
+    find(origin, destination) {
+        let originRoute = this.allRoutes[origin];
+        if (!originRoute) {
+            throw new Error('route not found');
+        }
+        let possibleRoutes = this.allRoutes[origin].next(this.allRoutes);
+        // console.log(util.inspect(possibleRoutes, { showHidden: false, depth: null }));
+        this._deepSearch(possibleRoutes, destination);
+
+        let entries = Object.entries(this.paths);
+        if (!entries.length) {
+            throw new Error('route not found');
+        }
+        let sorted = entries.sort((a, b) => a[0].length - b[0].length).sort((a, b) => a[1] - b[1]);
+
+        return this._formatString(sorted[0]);
+    }
+
+    _deepSearch(route, destination, cost = 0, path = '') {
+        cost += parseInt(route.cost);
+        path += route.origin + ' - ';
+        if (route.origin == destination) {
+            this.paths[path] = cost;
+        } else {
+            route.destinations.forEach(r => {
+                this._deepSearch(r, destination, cost, path);
+            });
+        }
+    }
+
+    _formatString(bestRoute) {
+        let path = bestRoute[0].replace(/-([^-]*)$/, '$1').trim();
+        return 'best route: ' + path + ' > $' + bestRoute[1];
     }
 }
 

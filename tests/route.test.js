@@ -65,7 +65,7 @@ describe('Manager', () => {
         expect(spyRouteFileHandlerWrite).toHaveBeenCalledTimes(1);
         expect(spyRouteFileHandlerWrite).toHaveBeenCalledWith(ROUTE);
 
-        const expectedCheapestRoute = 'best route: UUU - VVV > $420'
+        const expectedCheapestRoute = 'best route: UUU - VVV > $420';
         const receivedCheapestRoute = Manager.getInstance().findCheapestRouteBy(QUERY_ROUTE);
 
         expect(spyIsSearchValid).toHaveBeenCalledTimes(1);
@@ -92,7 +92,7 @@ describe('Manager', () => {
 
     test('manager must find the best route given an valid route', () => {
         const QUERY_ROUTE = 'GRU-CDG';
-        const expectedCheapestRoute = 'best route: GRU - BRC - SCL - ORL - CDG > $40'
+        const expectedCheapestRoute = 'best route: GRU - BRC - SCL - ORL - CDG > $40';
 
         let receivedCheapestRoute = Manager.getInstance().load(VALID_INPUT).findCheapestRouteBy(QUERY_ROUTE);
 

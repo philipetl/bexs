@@ -28,7 +28,7 @@ class RouteFileHandler {
                 .split('\n')
                 .map(l => l.trim())
                 .map(l => l.split(',').map(c => c.trim()))
-                .map(l => new Route(l[0], l[1], l[2]));
+                .map(l => [l[0], l[1], l[2]]);
         }
         return this.#routes;
     }
