@@ -93,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="manager_Manager.js.html">manager/Manager.js</a>, <a href="manager_Manager.js.html#line11">line 11</a>
+        <a href="manager_Manager.js.html">manager/Manager.js</a>, <a href="manager_Manager.js.html#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -201,7 +201,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="manager_Manager.js.html">manager/Manager.js</a>, <a href="manager_Manager.js.html#line20">line 20</a>
+        <a href="manager_Manager.js.html">manager/Manager.js</a>, <a href="manager_Manager.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -230,7 +230,7 @@
 
         
 <div class="param-desc">
-    instância atual do Manager
+    Instância atual do Manager
 </div>
 
 
@@ -267,7 +267,7 @@
 
 
 <div class="description">
-    Recebe a string (ex.: AAA,BBB,20) e insere no arquivo atualmente utilizado
+    Responsável por realizar a inclusão de uma nova rota no arquivo atual
 </div>
 
 
@@ -319,166 +319,7 @@
 
             
 
-            <td class="description last">string no padrão /^[A-Z]{3},[A-Z]{3},[\d]*$/</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="manager_Manager.js.html">manager/Manager.js</a>, <a href="manager_Manager.js.html#line70">line 70</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    mensagem
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="findCheapestRouteBy"><span class="type-signature"></span>findCheapestRouteBy<span class="signature">(queryRoute)</span><span class="type-signature"> &rarr; {string}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Recebe a string (ex.: AAA,BBB,20) e insere no arquivo utilizado
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>queryRoute</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">string no padrão: /^[A-Z]{3}-[A-Z]{3}$/</td>
+            <td class="description last">rota em formato de string</td>
         </tr>
 
     
@@ -548,7 +389,7 @@
 
         
 <div class="param-desc">
-    Retorna uma string formatada da seguinte forma: "best route: AAA - BBB - CCC > $30\"
+    mensagem de sucesso ou exceção
 </div>
 
 
@@ -577,7 +418,7 @@
     
 
     
-    <h4 class="name" id="getSearcher"><span class="type-signature"></span>getSearcher<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="Searcher.html">Searcher</a>}</span></h4>
+    <h4 class="name" id="findCheapestAndShorterRoute"><span class="type-signature"></span>findCheapestAndShorterRoute<span class="signature">(search)</span><span class="type-signature"> &rarr; {string}</span></h4>
     
 
     
@@ -585,7 +426,7 @@
 
 
 <div class="description">
-    Responsável por ter sempre a instância atual do Searcher
+    Responsável por realizar a busca da rota
 </div>
 
 
@@ -594,6 +435,55 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>search</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">String de busca inserida pelo usuário</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -629,7 +519,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="manager_Manager.js.html">manager/Manager.js</a>, <a href="manager_Manager.js.html#line46">line 46</a>
+        <a href="manager_Manager.js.html">manager/Manager.js</a>, <a href="manager_Manager.js.html#line44">line 44</a>
     </li></ul></dd>
     
 
@@ -658,7 +548,7 @@
 
         
 <div class="param-desc">
-    instância atual do Searcher
+    Retorna uma string formatada com a rota mais barata e mais curta
 </div>
 
 
@@ -669,7 +559,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><a href="Searcher.html">Searcher</a></span>
+<span class="param-type">string</span>
 
 
     </dd>
@@ -695,7 +585,7 @@
 
 
 <div class="description">
-    Responsável pelo carregamento de todas as rotas em memória
+    Responsável pelo carregamento de todas as rotas do arquivo em memória
 </div>
 
 
@@ -747,7 +637,7 @@
 
             
 
-            <td class="description last">string|Route|Route array</td>
+            <td class="description last">Pode ser um filePath ou um array de Routes</td>
         </tr>
 
     
@@ -788,7 +678,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="manager_Manager.js.html">manager/Manager.js</a>, <a href="manager_Manager.js.html#line31">line 31</a>
+        <a href="manager_Manager.js.html">manager/Manager.js</a>, <a href="manager_Manager.js.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -840,7 +730,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Tue Jun 16 2020 13:41:19 GMT-0300 (Horário Padrão de Brasília)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Wed Jun 17 2020 00:03:22 GMT-0300 (Horário Padrão de Brasília)
 </footer>
 
 <script> prettyPrint(); </script>

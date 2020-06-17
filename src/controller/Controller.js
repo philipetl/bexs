@@ -6,12 +6,12 @@ module.exports = (app) => {
     app.get('/route', function (req, res) {
         let result;
         try {
-            result = Manager.getInstance().findCheapestRouteBy(req.query.route);
+            result = Manager.getInstance().findCheapestAndShorterRoute(req.query.search);
         } catch (e) {
             result = e.message;
             if (result == 'invalid search') {
                 res.status(400);
-            } else if (result == 'no routes') {
+            } else if (result == 'route not found') {
                 res.status(404);
             } else{
                 res.status(500);
@@ -34,7 +34,7 @@ module.exports = (app) => {
                 res.status(500);
             }
         }
-        if (result == 'route added') {
+        if (result == 'route created') {
             res.status(201);
         }
         res.send(result);

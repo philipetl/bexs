@@ -10,15 +10,15 @@ var rl = readline.createInterface({
     terminal: false
 });
 
-waitForUserInput = () => {
-    rl.question("please enter the route: ", function (queryRoute) {
-        if (queryRoute == "exit") {
+function waitForUserInput () {
+    rl.question("please enter the route: ", function (search) {
+        if (search == "exit") {
             rl.close();
             exit();
         } else {
             let result;
             try {
-                result = Manager.getInstance().findCheapestRouteBy(queryRoute);
+                result = Manager.getInstance().findCheapestAndShorterRoute(search);
             } catch (e) {
                 result = e.message;
             }

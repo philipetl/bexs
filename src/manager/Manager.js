@@ -14,7 +14,7 @@ class Manager {
 
     /**
      * Responsável por ter sempre a instância atual do Manager
-     * @returns {Manager} instância atual do Manager
+     * @returns {Manager} Instância atual do Manager
      */
     static getInstance() {
         if (!Manager.instance) {
@@ -24,8 +24,8 @@ class Manager {
     }
 
     /**
-     * Responsável pelo carregamento de todas as rotas em memória
-     * @param {object} param - string|Route|Route array
+     * Responsável pelo carregamento de todas as rotas do arquivo em memória
+     * @param {object} param - Pode ser um filePath ou um array de Routes
      */
     load(param) {
         if (typeof param === 'string') {
@@ -37,13 +37,13 @@ class Manager {
     }
 
     /**
-     * Recebe a string (ex.: AAA,BBB,20) e insere no arquivo utilizado
-     * @param {string} queryRoute - string no padrão: /^[A-Z]{3}-[A-Z]{3}$/
-     * @returns {string} Retorna uma string formatada da seguinte forma: "best route: AAA - BBB - CCC > $30\"
+     * Responsável por realizar a busca da rota
+     * @param {string} search - String de busca inserida pelo usuário
+     * @returns {string} Retorna uma string formatada com a rota mais barata e mais curta
      */
-    findCheapestRouteBy(queryRoute) {
-        if (!Validator.isSearchValid(queryRoute)) throw new Error('invalid search');
-        let [origin, destination] = queryRoute.split('-');
+    findCheapestAndShorterRoute(search) {
+        if (!Validator.isSearchValid(search)) throw new Error('invalid search');
+        let [origin, destination] = search.split('-');
 
         return Searcher.getInstance()
             .build(Object.assign([], this.allRoutes))
@@ -51,9 +51,9 @@ class Manager {
     }
 
     /**
-     * Recebe a string (ex.: AAA,BBB,20) e insere no arquivo atualmente utilizado
-     * @param {string} routeStr - string no padrão /^[A-Z]{3},[A-Z]{3},[\d]*$/
-     * @returns {string} mensagem
+     * Responsável por realizar a inclusão de uma nova rota no arquivo atual
+     * @param {string} routeStr - rota em formato de string
+     * @returns {string} mensagem de sucesso ou exceção
      */
     addRoute(routeStr) {
         if (!Validator.isRouteValid(routeStr)) throw new Error('invalid route');
@@ -67,7 +67,7 @@ class Manager {
         RouteFileHelper.write(routeStr);
         this.load([origin, destination, cost]);
 
-        return 'route added';
+        return 'route created';
     }
 }
 

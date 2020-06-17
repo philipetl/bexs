@@ -60,13 +60,13 @@ describe('Manager', () => {
         const ROUTE = 'UUU,VVV,420';
         const QUERY_ROUTE = 'UUU-VVV';
 
-        expect(Manager.getInstance().load(VALID_INPUT_COPY).addRoute(ROUTE)).toBe('route added');
+        expect(Manager.getInstance().load(VALID_INPUT_COPY).addRoute(ROUTE)).toBe('route created');
         expect(spyIsRouteValid).toHaveBeenCalledTimes(8);
         expect(spyRouteFileHandlerWrite).toHaveBeenCalledTimes(1);
         expect(spyRouteFileHandlerWrite).toHaveBeenCalledWith(ROUTE);
 
         const expectedCheapestRoute = 'best route: UUU - VVV > $420';
-        const receivedCheapestRoute = Manager.getInstance().findCheapestRouteBy(QUERY_ROUTE);
+        const receivedCheapestRoute = Manager.getInstance().findCheapestAndShorterRoute(QUERY_ROUTE);
 
         expect(spyIsSearchValid).toHaveBeenCalledTimes(1);
         expect(receivedCheapestRoute).toBe(expectedCheapestRoute);
@@ -83,7 +83,7 @@ describe('Manager', () => {
 
     test('manager must throw error when queryRoute is not in the right pattern', () => {
         try {
-            new Manager().findCheapestRouteBy('CRAZY SEARCH ROUTE');
+            new Manager().findCheapestAndShorterRoute('CRAZY SEARCH ROUTE');
         } catch (e) {
             expect(e.message).toBe("invalid search");
         }
@@ -94,7 +94,7 @@ describe('Manager', () => {
         const QUERY_ROUTE = 'GRU-CDG';
         const expectedCheapestRoute = 'best route: GRU - BRC - SCL - ORL - CDG > $40';
 
-        let receivedCheapestRoute = Manager.getInstance().load(VALID_INPUT).findCheapestRouteBy(QUERY_ROUTE);
+        let receivedCheapestRoute = Manager.getInstance().load(VALID_INPUT).findCheapestAndShorterRoute(QUERY_ROUTE);
 
         expect(spyIsSearchValid).toHaveBeenCalledTimes(1);
         expect(receivedCheapestRoute).toBe(expectedCheapestRoute);

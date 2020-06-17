@@ -3,7 +3,8 @@
  */
 class Validator {
     /**
-     * @param {string} queryRoute - String inserida pelo usuário
+     * Valida se a busca está no padrão /^[A-Z]{3}-[A-Z]{3}$/
+     * @param {string} search - String inserida pelo usuário
      * @example
      * // returns true
      * isSearchValid('AAA-BBB');
@@ -16,11 +17,12 @@ class Validator {
      * // returns false
      * isSearchValid('ANYTHING');
      */
-    static isSearchValid(queryRoute) {
-        return /^[A-Z]{3}-[A-Z]{3}$/.test(queryRoute)
+    static isSearchValid(search) {
+        return /^[A-Z]{3}-[A-Z]{3}$/.test(search)
     }
 
     /**
+     * Valida se a rota inserida está no padrão /^[A-Z]{3},[A-Z]{3},[\d]*$/
      * @param {string} route - String inserida pelo usuário
      * @example
      * // returns true

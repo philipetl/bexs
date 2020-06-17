@@ -1,12 +1,12 @@
 /**
- * Representa cada rota
+ * Representa cada rota e seus destinos possíveis
  */
 class Route {
     /**
      * @constructor
-     * @param {string} origin - Origem da rota.
-     * @param {string} destination - Destino da roda.
-     * @param {int} cost - Custo da rota.
+     * @param {string} origin - Origem da rota
+     * @param {int} cost - Custo da rota em relação ao elemento pai
+     * @param {Route[]} destinations - Array de destinos possíveis
      */
     constructor(origin, cost, destinations = []) {
         this.origin = origin;
@@ -14,9 +14,14 @@ class Route {
         this.destinations = destinations;
     }
 
-    next = (routes) => {
+    /**
+     * Responsável por preencher os dados de todas os possíveis camihos para uma dada roda
+     * @param {Route[]} routes - Array com todas as rotas
+     * @returns Devolve todos os caminhos possíveis a partir de uma origem
+     */
+    next(routes) {
         this.destinations = this.destinations.map(r => {
-            r.destinations = routes[r.origin].destinations     
+            r.destinations = routes[r.origin].destinations
             return r;
         })
             .map(r => r.next(routes));

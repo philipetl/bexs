@@ -44,12 +44,11 @@ please enter the route:
 ## Estrutura dos arquivos
 ```
 |	.gitignore
+|	.npmrc
 |	index.js
 |	jest.config.js
-|	package-lock.json
 |	package.json
-|	tree.txt
-|___documentation/*
+|___documentation/...
 |___src
 |	|	app.js
 |	|___config
