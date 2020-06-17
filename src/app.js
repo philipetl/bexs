@@ -31,10 +31,10 @@ waitForUserInput = () => {
 exports.init = () => {
     try {
         let param = process.argv[2]
-        param = getVerifyRouteFile(param);
+        filePath = getVerifyRouteFile(param);
 
-        console.log('source file: ' + param);
-        Manager.getInstance().load(param);
+        console.log('source file: ' + filePath);
+        Manager.getInstance().load(filePath);
 
         waitForUserInput(); 
     } catch (e) {

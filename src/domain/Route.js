@@ -1,5 +1,5 @@
 class Route {
-    constructor(origin, cost = 0, destinations = []) {
+    constructor(origin, cost, destinations = []) {
         this.origin = origin;
         this.cost = cost;
         this.destinations = destinations;
@@ -7,11 +7,11 @@ class Route {
 
     next = (routes) => {
         this.destinations = this.destinations.map(r => {
-            let obj = Object.assign({}, routes[r.origin]);
+            r.destinations = routes[r.origin].destinations     
+            return r;
+        })
+            .map(r => r.next(routes));
 
-            obj.cost = r.cost;
-            return obj;
-        });
         return this;
     }
 }
