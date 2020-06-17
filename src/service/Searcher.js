@@ -2,7 +2,11 @@ const PossibleRoute = require('../domain/PossibleRoute');
 const Route = require('../domain/Route');
 const util = require('util');
 
+/**
+ * Responsável por realizar a busca de rotas
+ */
 class Searcher {
+
     static instance;
     paths = {};
     allRoutes;
@@ -22,7 +26,6 @@ class Searcher {
                 result[item.origin] = item;
                 return result;
             }, {});
-
         allRoutesArray.filter(i => this.allRoutes[i[1]] === undefined)
             .forEach(i => this.allRoutes[i[1]] = new Route(i[1], 0, []));
 
@@ -40,7 +43,6 @@ class Searcher {
         this._deepSearch(possibleRoutes, destination);
 
         let entries = Object.entries(this.paths);
-
         if (!entries.length) {
             throw new Error('route not found');
         }
@@ -66,6 +68,5 @@ class Searcher {
         return 'best route: ' + path + ' > $' + bestRoute[1];
     }
 }
-
 
 module.exports = Searcher;
