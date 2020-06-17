@@ -17,7 +17,7 @@ class RouteFileHandler {
     /**
      * Responsável por ler o arquivo informado
      * @param {string} filePath - caminho do arquivo a ser utilizado
-     * @returns {Route[]} array com todas as rotas encontrada
+     * @returns {Route[]} Array com todas as rotas encontrada
      */
     static readCsvToRoutes(filePath = FILE_PATH_TO_RESOURCE) {
         this.#filePath = this.getVerifyRouteFile(filePath);
@@ -35,8 +35,8 @@ class RouteFileHandler {
 
     /**
      * Responsável pela verificação do arquivo
-     * @param {string} filePath - caminho do arquivo a ser verificado
-     * @returns {string} caminho validado: arquivo existe e não possui rotas inválidas
+     * @param {string} filePath - Caminho do arquivo a ser verificado
+     * @returns {string} Caminho validado: arquivo existe e não possui rotas inválidas
      */
     static getVerifyRouteFile(filePath) {
         if (!filePath) {

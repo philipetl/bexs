@@ -40,7 +40,6 @@ invalid search
 please enter the route:
 ```
 
-
 ## Estrutura dos arquivos
 ```
 |	.gitignore
@@ -89,8 +88,8 @@ Responses:
 
 [POST] localhost:3000/route
 body: { "route": "GGG,PPP,679" }
-[HTTP/1.1 201 OK]                       route added
-[HTTP/1.1 409 CONFLICT]		            route already exists
+[HTTP/1.1 201 OK]                       route created
+[HTTP/1.1 409 CONFLICT]					route already exists
 [HTTP/1.1 500 INTERNAL SERVER ERROR]    others
 ```
 
