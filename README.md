@@ -1,4 +1,4 @@
-# BEXS - processo de entrevista
+# Path Finder
 
 ## Como executar a aplicação
 Dentro da raiz do projeto, execute a instalação das dependências do node:
